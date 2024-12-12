@@ -1,10 +1,10 @@
 # senior-be-developer-task
 
-## Introduction 
+## Introduction
 Hello! If you are viewing this repository you are probably a candidate for HyperGuest senior backend developer, congrats!
 
 Before we begin, a few important notes please!
-* Any AI tool is forbidden during this task. We already know Github copilot is a great tool, we don't need to test it :) 
+* Any AI tool is forbidden during this task. We already know Github copilot is a great tool, we don't need to test it :)
 * This task is designated to test your problem-solving skills, still, code quality do matters! submit a code you would like to read as well
 * At your sumption please include the next things :
     -  your implementation of `Queues.ts`. Any other files are not allowed to be changed during this test.
@@ -16,14 +16,14 @@ Good luck!
 
 ## Task description
 
-The code in this repo is not working properly. 
+The code in this repo is not working properly.
 
-The script `main.ts` is trying to write "a lot" of data into a simulation of a key-value database ( implemented in `Datable.ts`). As Databases usually do - our database has small latency - between 0 to 100 ms per operation. 
+The script `main.ts` is trying to write "a lot" of data into a simulation of a key-value database ( implemented in `Datable.ts`). As Databases usually do - our database has small latency - between 0 to 100 ms per operation.
 In order to allow faster process of the messages our `main.ts` script puts all the operations in a queue (see the `Queue.ts` file). Than it launches a random number (between 3 to 6) of "workers" (see `Worker.ts`), that works asynchronously in parallel, reading messages from the queue and commit the operation to the "Database". Each worker should "confirm" to the queue that the message was proceeded, so the message would be deleted.
-The script wait for 10 seconds (enough time for all the workers to complete the work), prints the state of hte queue and the DB state, and exits. 
+The script wait for 10 seconds (enough time for all the workers to complete the work), prints the state of hte queue and the DB state, and exits.
 
 However! <br />
-the results are wrong :( <br /> 
+the results are wrong :( <br />
 We set all the initial values to 50, and than we add all numbers between 1 to 9 for each item. therefore the correct results so the correct output should be:
 ```bash
 # > ts-node main.ts
@@ -53,6 +53,18 @@ DB state:
 }
 ```
 
-Please assist our dev team to implement a valid version of `Queue.ts`! 
+Please assist our dev team to implement a valid version of `Queue.ts`!
 
 *note*: Any implementation that would effectively not allow any parallel work between the workers would be rejected.
+
+## Possible improvements
+
+1. There are no package configs (package.json and package-lock.json) that would describe all stuff related to the project (NPM dependencies, author, license, scripts, etc.).
+2. It would be nice to have some virtualization for running the project.
+3. There are no tests.
+4. No errors and exceptions catching.
+5. It would be nice to have some linting to support common code writing.
+6. It would be nice to keep `main.ts` as simple as possible without any complex logic as now.
+7. `Database.ts`: we could use just an object to define the required map instead of using the `switch (message.operation)` statement. I would think about another approach to generate a Message ID, something that would provide the correct sequence number.
+8. `Worker.ts`: It would be nice to allow the Worker to process several messages from different sessions. We could increase performance and possibly reduce the number of Workers to process all messages. In the current requirements stage, a worker is limited to processing only one message at a time.
+
